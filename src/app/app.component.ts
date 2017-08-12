@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   template: `
   <h1>{{name}}</h1>
   <div *ngIf="ethdata">
