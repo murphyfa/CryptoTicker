@@ -1,0 +1,26 @@
+<!-- core/navbar.component.html -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+                <button type="button" 
+                        class="navbar-toggle collapsed"
+                        (click)="toggleState()">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" [routerLink] = "['/']">CT</a>
+        </div>
+         <div class="collapse navbar-collapse"
+              [ngClass]="{ 'in': isIn }">
+            <ul class="nav navbar-nav">
+                <li><a [routerLink] = "['/Current', 'ETH']" (click)="toggleState()">ETH/USD</a></li>
+                <li><a [routerLink]="['/Current', 'BTC']" (click)="toggleState()">BTC/USD</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="ticker-body">
+    <router-outlet></router-outlet>
+</div>

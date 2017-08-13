@@ -1,0 +1,13 @@
+<div class="ticker-body">
+    <h1>{{symbol}} to USD</h1>
+    <div *ngIf="ethdata">
+        <span>${{ethdata.price | number : '1.2-2'}}</span>
+        <span>{{ethdata.time | date:'h:mm:ssa MM/dd/yyyy'}}</span>
+    </div>
+    <div *ngIf="highlow">
+        <br>
+        <span>24 Hour High/Low</span>
+        <span>High ${{highlow.high | number : '1.2-2'}} | Low ${{highlow.low | number : '1.2-2'}}</span>
+        <span>24h Volume: {{highlow.volume | number : '1.0-0'}}</span>
+    </div>
+</div>
