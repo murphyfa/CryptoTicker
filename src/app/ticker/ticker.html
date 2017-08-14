@@ -1,13 +1,33 @@
-<div class="ticker-body">
-    <h1>{{symbol}} to USD</h1>
-    <div *ngIf="ethdata">
-        <span>${{ethdata.price | number : '1.2-2'}}</span>
-        <span>{{ethdata.time | date:'h:mm:ssa MM/dd/yyyy'}}</span>
+<div *ngIf="pricedata" class="ticker-body">
+    <div class="price-div">
+        <span class="symbol-label-sm">1 {{symbol}} = </span>
+        <span class="price-big">${{price | number : '1.2-2'}}</span>
+        <span *ngIf="highlow" class="percent-label" [ngClass]="{'percent-gain': isgain, 'percent-loss': !isgain}">{{percentChange}}</span>
     </div>
     <div *ngIf="highlow">
-        <br>
-        <span>24 Hour High/Low</span>
-        <span>High ${{highlow.high | number : '1.2-2'}} | Low ${{highlow.low | number : '1.2-2'}}</span>
-        <span>24h Volume: {{highlow.volume | number : '1.0-0'}}</span>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <span class="col-value">${{high | number : '1.2-2'}}</span>
+                    <span class="col-label">24h High</span>
+                </div>
+                <div class="col-sm-3">
+                    <span class="col-value">${{low | number : '1.2-2'}}</span>
+                    <span class="col-label">24h Low</span>
+                </div>
+                <div class="col-sm-3">
+                    <span class="col-value" [ngClass]="{'percent-gain': isgain, 'percent-loss': !isgain}">{{valueChange}}</span>
+                    <span class="col-label">24h Change</span>
+                </div>
+                <div class="col-sm-3">
+                    <span class="col-value">{{volume | number : '1.0-0'}}</span>
+                    <span class="col-label">24h Volume</span>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+<div *ngIf="!pricedata" style="padding-top: 100px">
+    <img src="./image/loading.gif" height="50" width="50">
 </div>

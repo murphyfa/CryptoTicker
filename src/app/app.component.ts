@@ -4,8 +4,6 @@ import { Http , Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Subscription } from 'rxjs';
 
-//this isn't being used at all currently, entry point is ticker.component.
-
 @Component({
   selector: 'app-root',
   templateUrl: 'nav.html',

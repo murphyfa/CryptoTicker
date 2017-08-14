@@ -1,0 +1,31 @@
+<div class="home-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-push-2">
+                <div class="price-div" [routerLink]="['/Current', 'ETH']">
+                    <img src="./image/eth.png" height="45px" style="vertical-align:middle">
+                    <span class="coin-label">ETH</span>
+                    <span class="coin-price">${{ethPrice | number: '1.2-2'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-push-2">
+                <div class="price-div" [routerLink]="['/Current', 'BTC']">
+                    <img src="./image/btc.png" height="45px" style="vertical-align:middle">
+                    <span class="coin-label">BTC</span>
+                    <span class="coin-price">${{btcPrice | number: '1.2-2'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-push-2">
+                <div class="price-div" [routerLink]="['/Current', 'LTC']">
+                    <img src="./image/ltc.png" height="45px" style="vertical-align:middle">
+                    <span class="coin-label">LTC</span>
+                    <span class="coin-price">${{ltcPrice | number: '1.2-2'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

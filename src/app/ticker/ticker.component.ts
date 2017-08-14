@@ -16,8 +16,18 @@ import { ActivatedRoute } from '@angular/router';
 export class TickerComponent  {
     symbol: any;
     oldsymbol: any;
-    ethdata: {};
-    highlow: {};
+    pricedata: any;
+    highlow: any;
+    price: number;
+    high: number;
+    low: number;
+    open: number;
+    volume: number;
+    last: number;
+    valueChange: string;
+    percentChange: string;
+    isgain: boolean;
+
     private sub: Subscription;
     private currentSub: Subscription;
     private daySub: Subscription;
@@ -28,42 +38,69 @@ export class TickerComponent  {
    ngOnInit() : void {
      let currentPriceTimer = Observable.timer(0,1000);
      let dayPriceTimer = Observable.timer(0,1000);
-
-     this.sub = this.route.params.subscribe(params => {
+     
+     // Checking for when a different coin is selected in view
+     this.route.params.subscribe(params => {
          this.symbol = params['ID'];
-     })
-
-     this.currentSub = currentPriceTimer.subscribe(() => {
-       this._ticker.getprice(this.symbol)
-       .subscribe(data => this.ethdata = data);
      });
 
-     this.daySub = dayPriceTimer.subscribe(() => {
+     // Subs to the current price
+     currentPriceTimer.subscribe(() => {
+        this._ticker.getprice(this.symbol)
+        .subscribe(data => {
+          this.pricedata = true;
+          this.price = data.price;
+        });
+     });
+
+     // Subs to the 24 hour stats 
+     dayPriceTimer.subscribe(() => {
        this._ticker.gethighlow(this.symbol)
-       .subscribe(data => this.highlow = data);
-     })
+       .subscribe(data => {
+         this.highlow = true;
+         this.high = data.high;
+         this.low = data.low;
+         this.open = data.open;
+         this.volume = data.volume;
+         this.last = data.last;
 
+         if (this.last > this.open) {
+           this.percentChange = '+' + (((this.last-this.open)/this.open)*100).toFixed(2) + '%';
+           this.valueChange = '+$' + (this.last-this.open).toFixed(2);
+           this.isgain = true;
+         }
+         else {
+           this.percentChange = (((this.last-this.open)/this.open)*100).toFixed(2) + '%';
+           this.valueChange = '-$' + ((this.last-this.open)*-1).toFixed(2);
+           this.isgain = false;
+         }
+       });
+     });
+
+     // Updates the page title
      this.titleService.setTitle(this.symbol + ' to USD Crypto Ticker');
-
-     console.log("STARTED");
-   }
-
-   ngOnChanges() {
-     console.log("CHANGES");
    }
 
    ngDoCheck() {
+     // This causes the view to go blank until new data is pulled
+     // It makes it look as if data for the selected coin is being loaded rather than just showing the same values for a second before changing
      if (this.oldsymbol != this.symbol) {
        this.oldsymbol = this.symbol;
-       this.ethdata = false;
+       this.pricedata = false;
        this.highlow = false;
-       console.log("SYMBOL CHANGED");
+     }
+     // Shows the current price on the browser tab
+     if (this.price > 0) {
+       let titlePrice = (this.price*1).toFixed(2);
+       this.titleService.setTitle('$' + titlePrice + ' ' + this.symbol + ' to USD Crypto Ticker');     
      }
    }
 
+   /*
    ngOnDestroy() {
      this.currentSub.unsubscribe();
      this.daySub.unsubscribe();
      this.sub.unsubscribe();
    }
+   */
 }
