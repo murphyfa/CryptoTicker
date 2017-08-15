@@ -28,6 +28,23 @@
     </div>
 </div>
 
-<div *ngIf="!pricedata" style="padding-top: 100px">
+<div *ngIf="!pricedata" style="margin-top: 100px; height: 254px;">
     <img src="https://firebasestorage.googleapis.com/v0/b/cryptoticker-306df.appspot.com/o/loading.gif?alt=media&token=560fe35d-d0d2-4bcf-a0ae-23e430b780fc" height="50" width="50">
+</div>
+
+<div class="row" style="margin-bottom: 100px; margin-top: 50px;">
+    <div class="col-sm-8 col-sm-push-2">
+        <div style="display: block;">
+            <canvas *ngIf='chartready' baseChart width="400" height="150"
+                        [datasets]="lineChartData"
+                        [labels]="lineChartLabels"
+                        [options]="lineChartOptions"
+                        [colors]="lineChartColors"
+                        [legend]="lineChartLegend"
+                        [chartType]="lineChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+    </div>
 </div>

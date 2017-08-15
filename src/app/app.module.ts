@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HttpModule } from "@angular/http";
 import { RouterModule, Routes } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -12,9 +13,9 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports:      [ BrowserModule,HttpModule,RouterModule.forRoot(appRoutes) ],
+  imports:      [ BrowserModule,HttpModule,RouterModule.forRoot(appRoutes), ChartsModule ],
   declarations: [ TickerComponent, AppComponent, HomeComponent ],
   bootstrap:    [ AppComponent ]
 })
 
-export class AppModule { }
+export class AppModule {}

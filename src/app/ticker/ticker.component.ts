@@ -13,7 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   providers: [TickerService]
 })
 
-export class TickerComponent  {
+export class TickerComponent {
     symbol: any;
     oldsymbol: any;
     pricedata: any;
@@ -27,6 +27,63 @@ export class TickerComponent  {
     valueChange: string;
     percentChange: string;
     isgain: boolean;
+    dataPrices: number[] = [];
+    dataTimes: Array<any> = [];
+    public lineChartData: Array<any> = [];
+    public lineChartLabels: Array<any> = [];
+    chartready: boolean = false;
+
+      // lineChart
+    public lineChartOptions:any = {
+      responsive: true,
+      title: {
+        display: true,
+        text: 'Past 24 Hours',
+        fontColor: '#ffffff'
+      },
+      scales: {
+        xAxes: [{
+          gridLines: {
+            display: false,
+            color: '#ffffff'
+          },
+          ticks: {
+            display: false
+          }
+        }],
+        yAxes: [{
+          gridLines: {
+            display: false,
+            color: '#ffffff'
+          },
+          ticks: {
+            fontColor: '#ffffff'
+          }
+        }]
+      },
+      elements: {
+        point: {
+          borderWidth: '0',
+          radius: '0',
+          hoverRadius: '2'
+        },
+        line: {
+          borderWidth: '1'
+        }
+      }
+    };
+    public lineChartColors:Array<any> = [
+      { // grey
+        backgroundColor: 'rgba(148,159,177,0.2)',
+        borderColor: 'rgba(148,159,177,1)',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#000000',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      }
+    ];
+    public lineChartLegend:boolean = false;
+    public lineChartType:string = 'line';
 
     private sub: Subscription;
     private currentSub: Subscription;
@@ -79,15 +136,31 @@ export class TickerComponent  {
 
      // Updates the page title
      this.titleService.setTitle(this.symbol + ' to USD Crypto Ticker');
-   }
+  }
 
    ngDoCheck() {
      // This causes the view to go blank until new data is pulled
      // It makes it look as if data for the selected coin is being loaded rather than just showing the same values for a second before changing
      if (this.oldsymbol != this.symbol) {
-       this.oldsymbol = this.symbol;
-       this.pricedata = false;
-       this.highlow = false;
+      this.oldsymbol = this.symbol;
+      this.pricedata = false;
+      this.highlow = false;
+
+      // Populate chart data, handles initial page load and when different coin is selected
+      this.dataPrices = [];
+      this.dataTimes = [];
+      this._ticker.gethistoricaldata(this.symbol)
+      .subscribe(data => {
+        for (let point of data) {
+          this.dataPrices.unshift(point[2]);
+          this.dataTimes.unshift(new Date(point[0]*1000).toLocaleTimeString());
+          }
+        this.lineChartData = [
+          {data: this.dataPrices, label: this.symbol + '/USD'}
+        ];
+        this.lineChartLabels = this.dataTimes;
+        this.chartready = true;
+      });
      }
      // Shows the current price on the browser tab
      if (this.price > 0) {

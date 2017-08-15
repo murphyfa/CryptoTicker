@@ -19,4 +19,19 @@ export class TickerService {
         return this.http.get(ethhighlow)
         .map(response => response.json());
     }
+
+    gethistoricaldata(symbol: string) {
+        let currentTime = new Date().toISOString();
+        currentTime = currentTime.split('.')[0]+"Z";
+        let date = new Date().setDate(new Date().getDate()-1);
+        let pastTime = new Date(date).toISOString();
+        pastTime = pastTime.split('.')[0]+"Z";
+        console.log(currentTime);
+        console.log(pastTime);
+        let candleurl='https://api.gdax.com/products/' + symbol + '-USD/candles?start=' + pastTime + '&end=' + currentTime + '&granularity=900';
+        return this.http.get(candleurl)
+        .map(response => response.json());
+    }
+
+
 }
