@@ -7,19 +7,19 @@
     <div *ngIf="highlow">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-3 details-col">
                     <span class="col-value">${{high | number : '1.2-2'}}</span>
                     <span class="col-label">24h High</span>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 details-col">
                     <span class="col-value">${{low | number : '1.2-2'}}</span>
                     <span class="col-label">24h Low</span>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 details-col">
                     <span class="col-value" [ngClass]="{'percent-gain': isgain, 'percent-loss': !isgain}">{{valueChange}}</span>
                     <span class="col-label">24h Change</span>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3 details-col">
                     <span class="col-value">{{volume | number : '1.0-0'}}</span>
                     <span class="col-label">24h Volume</span>
                 </div>
@@ -32,19 +32,21 @@
     <img src="https://firebasestorage.googleapis.com/v0/b/cryptoticker-306df.appspot.com/o/loading.gif?alt=media&token=560fe35d-d0d2-4bcf-a0ae-23e430b780fc" height="50" width="50">
 </div>
 
-<div class="row" style="margin-bottom: 100px; margin-top: 50px;">
-    <div class="col-sm-8 col-sm-push-2">
-        <div style="display: block;">
-            <canvas *ngIf='chartready' baseChart width="400" height="150"
-                        [datasets]="lineChartData"
-                        [labels]="lineChartLabels"
-                        [options]="lineChartOptions"
-                        [colors]="lineChartColors"
-                        [legend]="lineChartLegend"
-                        [chartType]="lineChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)">
-            </canvas>
+<div class="container-fluid" style="margin-bottom: 100px; margin-top: 50px;">
+    <div class="row">
+        <div class="col-sm-8 col-sm-push-2">
+            <div style="display: block;">
+                <canvas *ngIf='chartready' baseChart width="400" height="150"
+                            [datasets]="lineChartData"
+                            [labels]="lineChartLabels"
+                            [options]="lineChartOptions"
+                            [colors]="lineChartColors"
+                            [legend]="lineChartLegend"
+                            [chartType]="lineChartType"
+                            (chartHover)="chartHovered($event)"
+                            (chartClick)="chartClicked($event)">
+                </canvas>
+            </div>
         </div>
     </div>
 </div>

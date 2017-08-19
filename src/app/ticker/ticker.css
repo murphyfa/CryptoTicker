@@ -43,3 +43,35 @@
     display: block;
     font-size: 20px;
 }
+
+@media (max-width: 991px) {
+    .price-big {
+        font-size: 60px;
+    }
+
+    .symbol-label-sm {
+        bottom: 30px;
+    }
+
+    .col-value {
+        font-size: 30px;
+    }
+
+    .col-label {
+        font-size: 16px;
+    }
+
+    .details-col {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .price-big {
+        font-size: 45px;
+    }
+
+    .symbol-label-sm {
+        bottom: 20px;
+    }
+}
